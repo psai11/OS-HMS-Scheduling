@@ -6,6 +6,8 @@ require 'config.php';
 require 'patient_class.php';
 $patient_array=array();
 $str="";
+$str1="";
+$error_message="";
 require 'index_handler.php';
 ?>
 
@@ -25,7 +27,7 @@ require 'index_handler.php';
 		<span></span>
 		<div class="add_patient">
 			<div class="add_patient_header">
-				Add new patient details here!
+				<h3>Add new patient details here!</h3>>
 			</div>
 			<form action="index.php" method="POST">
 				<label for="patient_name">Patient Name:</label>
@@ -37,6 +39,9 @@ require 'index_handler.php';
 				<label for="patient_intime">Patient Intime:</label>
 				<input type="time" name="patient_intime" placeholder="Patient Intime"required>
 				<br>
+				<label for="condition_type">Condition Type:</label>
+				<input type="text" name="condition_type" placeholder="Normal/Referral/Urgent/Emergency"required>
+				<p><?php echo $error_message; ?></p>
 				<input type="submit" name="add_button" value="Add Patient">
 				<br>
 			</form>
@@ -48,15 +53,27 @@ require 'index_handler.php';
 		</div>
 		<br>
 		<br>
-		<div class='show_patient'>
+
+		<div class='show_sheduled_patient'>
+			<h3>The Scheduling is as follows:</h3>
 			<?php  
-				echo $str;
+				echo $str1;
 			?>
 		</div>
 		<br>
 		<br>
 		
 	</div>
+
+	<div class='show_patient'>
+		<h3>Current Patient Queue</h3>
+		<?php  
+			echo $str;
+		?>
+	</div>
+
+	<br>
+	<br>
 
 
 </body>
