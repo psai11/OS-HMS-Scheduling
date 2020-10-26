@@ -1,0 +1,115 @@
+@font-face{
+	font-family: 'Bellota-LightItalic';
+	src:url('Bellota-LightItalic.otf');
+}
+@font-face{
+	font-family: 'Bellota-BoldItalic';
+	src:url('Bellota-BoldItalic.otf');
+}
+
+html, body {
+	height: 100%;
+	min-height: 100%;
+}
+
+.wrapper {
+	font-family: 'Bellota-BoldItalic',sans-serif;
+	margin-right: auto;
+	margin-left: auto;
+	top: 10px;
+	position: relative;
+	padding: 0 10px;
+	width: 75%;
+	min-width: 1000px;
+	text-align: center;
+}
+
+.wrapper h1 {
+	text-align: center;
+	font-family: 'Bellota-BoldItalic',sans-serif;
+	margin-top: 0;
+	margin-bottom: 0;
+	color: #424b52;
+	text-shadow: #595db0 1.5px 1.5px 2px;
+	font-size: 250%;
+}
+
+.wrapper span {
+	text-align: center;
+	font-family: 'Bellota-LightItalic',sans-serif;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #424b52;
+	font-size: 150%;
+
+}
+
+.add_patient {
+	font-family: 'Bellota-LightItalic',sans-serif;
+	position: relative;
+	margin-right: auto;
+	margin-left: auto;
+	top: 7%;
+	width: 50%;
+	background-color: #B9B8B3;
+	border: 1px solid #EDEDED;
+	border-radius: 7px;
+	padding: 5px;
+	opacity: 90%;
+	text-align: center;
+}
+
+input[type="submit"] {
+	background-color: #9fa3a6;
+	border: 1px solid #9fa3a6;
+	border-radius: 3px;
+	margin: 5px 0 10px 0;
+	padding: 5px 10px 5px 10px;
+	color: #424b52;
+	text-shadow: #595db0 1.5px 1.5px 2px;
+	font-family: 'Bellota-BoldItalic',sans-serif;
+	font-size:100%;
+}
+
+input[type="submit"]:hover {
+	color:#0a0d10;
+	box-shadow: #d8dee2 1.5px 1.5px 1px; 
+	background-color: #656e75;
+}
+
+input[type="text"],input[type="password"],input[type="time"] {
+	border: 1px solid #e5e5e5;
+	margin-top: 5px;
+	width: 70%;
+	height: 35px;
+	margin-bottom: 10px;
+	padding-left: 5px;
+}
+
+input[type="text"]:hover,input[type="password"]:hover {
+	border-color: #9fa3a6;
+}
+
+.show_patient {
+	font-family: 'Bellota-LightItalic',sans-serif;
+	position: relative;
+	margin-right: auto;
+	margin-left: auto;
+	top: 7%;
+	width: 20%;
+	background-color: #B9B8B3;
+	border: 1px solid #EDEDED;
+	border-radius: 7px;
+	padding: 5px;
+	opacity: 90%;
+}
+
+.patient_idname h4 {
+	font-family: 'Bellota-BoldItalic',sans-serif;
+	text-shadow: #595db0 1.5px 1.5px 2px;
+}
+
+.patient_details h5 {
+	margin-top: 0;
+	margin-bottom: 0;
+}
