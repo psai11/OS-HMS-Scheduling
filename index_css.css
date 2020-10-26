@@ -20,7 +20,7 @@ html, body {
 	top: 10px;
 	position: relative;
 	padding: 0 10px;
-	width: 75%;
+	width: 70%;
 	min-width: 1000px;
 	text-align: center;
 }
@@ -94,7 +94,7 @@ input[type="text"]:hover,input[type="password"]:hover {
 .show_patient {
 	font-family: 'Bellota-LightItalic',sans-serif;
 	position: relative;
-	margin-right: auto;
+	margin-right: 84px;	
 	margin-left: auto;
 	top: 7%;
 	width: 20%;
@@ -129,4 +129,8 @@ input[type="text"]:hover,input[type="password"]:hover {
 	opacity: 90%;
 	text-align: center;
 
+}
+
+.patient_idname b {
+	text-decoration: underline;
 }

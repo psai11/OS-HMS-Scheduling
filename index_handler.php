@@ -112,9 +112,9 @@ if (isset($_POST['finish_button'])){
 		$efftime = $value + $multiplier[$key] * $average_burst_time;
 		$effective_time[$all_id[$key]]=$efftime;
 	}
-	/**
+	
 	asort($effective_time);
-	print_r($effective_time);
+	/**print_r($effective_time);
 	echo "<br>";
 	**/
 	/**
@@ -135,18 +135,46 @@ if (isset($_POST['finish_button'])){
 
 	/**print_r($id_in_order);
 	echo "<br>";**/
+	
+	//print_r($effective_time);
+	//echo "<br>";
 
-	print_r($id_in_order);
-	echo "<br>";
-	print_r($effective_time);
-	echo "<br>";
+	$current_time = strtotime("00:00:00");
+
+	$id_in_order = array_reverse($id_in_order);
 
 	while (!empty($id_in_order)) {
 
 		if (empty($wait_queue)) {
 			array_push($final_array, array_pop($id_in_order));
+			$curr = end($final_array);
+			$wait_queue[] = $curr;
+			$buffer_time = $patient_burst_time[end($final_array)];
+			$dq = mysqli_query($con, "SELECT * FROM CURRENT_PATIENT WHERE PAT_ID='$curr'");
+			$row = mysqli_fetch_array($dq);
+			$current_time = strtotime($row['PAT_INTIME']);
+			$finish_time = strtotime("+" . $buffer_time . " minutes", $current_time);
+
+				
 		}
 		else {
+			$i = end($id_in_order);
+			$dq = mysqli_query($con, "SELECT * FROM CURRENT_PATIENT WHERE PAT_ID='$i'");
+			$row = mysqli_fetch_array($dq);
+			$temp_t = strtotime($row['PAT_INTIME']);
+			/**echo date('h:i:s' , $temp_t);
+			echo "  ";
+			echo date('h:i:s' , $current_time);
+			echo "  ";
+			echo date('h:i:s' , $finish_time);
+			echo "  <br>";**/
+			if(date('h:i:s' , $temp_t) < date('h:i:s' , $finish_time)) {
+				array_push($wait_queue, array_pop($id_in_order));
+				continue;	
+			}		
+
+			array_splice($wait_queue, 0,1);	
+
 			foreach ($effective_time as $key => $value) {
 				$flag=0;
 				foreach ($wait_queue as $value1) {
@@ -163,14 +191,38 @@ if (isset($_POST['finish_button'])){
 		}
 	}
 
+	array_splice($wait_queue, 0,1);
+
+	//print_r($wait_queue);
+	//echo "<br>";
+
+
+	foreach ($effective_time as $key => $value) {
+		//echo $value ." -> ".$key ."<br>";
+				$flag=0;
+				foreach ($wait_queue as $value1) {
+					if ($key == $value1) {
+						array_push($final_array, $value1);
+						array_splice($wait_queue, array_search($value1, $wait_queue), 1);
+						$flag=1;
+						break;
+					}
+				if($flag)
+					break;
+				}
+			}
+
 	/**print_r($final_array);
 	echo "<br>";
 	echo "<br>";**/
+
+	$final_array = array_reverse($final_array);
 	
 
 	$current_time = strtotime("00:00:00");
 	/**print_r($patient_burst_time);
 	echo "<br>";	**/
+
 
 	while($id=array_pop($final_array)) {
 		/**echo $id;
@@ -189,7 +241,7 @@ if (isset($_POST['finish_button'])){
 		if($current_time < $intime)
 			$current_time = $intime;
 
-		$count=1;
+		
 
 		$finish_time = strtotime("+" . $patient_burst_time[$id] . " minutes", $current_time);
 		/**echo $patient_burst_time[$id];
@@ -198,7 +250,7 @@ if (isset($_POST['finish_button'])){
 
 		$str1 .= "<div class='show_each_patient'>
 						<div class='patient_idname'>
-							<h4>Patient $count checked at time <b>" . date('h:i:s' , $current_time) . " </b> till <b>" . date('h:i:s' , $finish_time) . "</b>:<h4>
+							<h4>Patient P" . $id . " examined by doctor from <b>" . date('h:i:s' , $current_time) . "</b> to <b>" . date('h:i:s' , $finish_time) . "</b>:<h4>
 							
 						</div>
 
@@ -210,7 +262,6 @@ if (isset($_POST['finish_button'])){
 						</div>
 					</div>
 					<hr>";
-		$count++;
 		$current_time = $finish_time;
 
 

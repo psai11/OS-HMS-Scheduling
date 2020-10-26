@@ -27,7 +27,7 @@ require 'index_handler.php';
 		<span></span>
 		<div class="add_patient">
 			<div class="add_patient_header">
-				<h3>Add new patient details here!</h3>>
+				<h3>Add new patient details here!</h3>
 			</div>
 			<form action="index.php" method="POST">
 				<label for="patient_name">Patient Name:</label>
