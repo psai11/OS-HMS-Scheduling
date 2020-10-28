@@ -7,7 +7,10 @@ require 'patient_class.php';
 $patient_array=array();
 $str="";
 $str1="";
+$str2="";
 $error_message="";
+$str_wait_time="";
+$str_fcfs_wait_time="";
 require 'index_handler.php';
 ?>
 
@@ -54,11 +57,34 @@ require 'index_handler.php';
 		<br>
 		<br>
 
-		<div class='show_sheduled_patient'>
-			<h3>The Scheduling is as follows:</h3>
-			<?php  
-				echo $str1;
-			?>
+		<div class="scheduling">
+			<div class='show_sheduled_patient first'>
+				<br>
+				<br>
+				<h3>Using genral FCFS:</h3>
+				<hr>
+				<?php  
+					echo $str2;
+				?>
+				<h3>Statistics:</h3>
+				<?php  
+					echo $str_fcfs_wait_time;
+				?>
+			</div>
+
+			<div class='show_sheduled_patient second'>
+				<br>
+				<br>
+				<h3>The Scheduling is as follows:</h3>
+				<hr>
+				<?php  
+					echo $str1;
+				?>
+				<h3>Statistics:</h3>
+				<?php  
+					echo $str_wait_time;
+				?>
+			</div>
 		</div>
 		<br>
 		<br>
@@ -67,6 +93,7 @@ require 'index_handler.php';
 
 	<div class='show_patient'>
 		<h3>Current Patient Queue</h3>
+		<hr>
 		<?php  
 			echo $str;
 		?>

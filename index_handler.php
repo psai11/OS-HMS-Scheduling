@@ -105,7 +105,7 @@ if (isset($_POST['finish_button'])){
 	print_r($multiplier);
 	echo "<br>";
 	print_r($all_id);**/
-
+	$no_of_patients = mysqli_num_rows($data_query);
 	$average_burst_time /= mysqli_num_rows($data_query);
 
 	foreach ($patient_burst_time as $key => $value) {
@@ -142,6 +142,8 @@ if (isset($_POST['finish_button'])){
 	$current_time = strtotime("00:00:00");
 
 	$id_in_order = array_reverse($id_in_order);
+
+	$fcfs = $id_in_order;
 
 	while (!empty($id_in_order)) {
 
@@ -223,6 +225,71 @@ if (isset($_POST['finish_button'])){
 	/**print_r($patient_burst_time);
 	echo "<br>";	**/
 
+	$waiting_time = 0;
+	$str_fcfs_wait_time = "";
+
+
+	while($id=array_pop($fcfs)) {
+		/**echo $id;
+		echo "<br>";
+		echo $id;
+		echo "   ";**/
+		$data_query = mysqli_query($con, "SELECT * FROM CURRENT_PATIENT WHERE PAT_ID='$id'");
+		$row = mysqli_fetch_array($data_query);
+
+		$id = $row['PAT_ID'];
+		$name = $row['PAT_NAME'];
+		$illness = $row['PAT_ILLNESS'];
+		$illness = strtolower($illness);
+		$intime = strtotime($row['PAT_INTIME']);
+
+		if($current_time < $intime)
+			$current_time = $intime;
+
+		$waiting_time += (($current_time-$intime)/60);
+		
+		$finish_time = strtotime("+" . $patient_burst_time[$id] . " minutes", $current_time);
+		/**echo $patient_burst_time[$id];
+		echo "<br>";**/
+
+
+		$str2 .= "<div class='show_each_patient'>
+						<div class='patient_idname'>
+							<h4>Patient P" . $id . " examined by doctor from <b>" . date('h:i:s' , $current_time) . "</b> to <b>" . date('h:i:s' , $finish_time) . "</b>:<h4>
+							
+						</div>
+
+						<div class='patient_details'>
+							<h5>Patient Id: P$id</h5>
+							<h5>Patient Name: $name</h5>
+							<h5>Patient Illness: $illness</h5>
+							<h5>Patient In Time: " . date('h:i:s' , $intime) . "</h5>
+							<h5>Patient Treating Time: $patient_burst_time[$id]</h5>
+						</div>
+					</div>
+					<hr>";
+
+
+		$current_time = $finish_time;
+
+
+	}
+	$str_fcfs_wait_time .= "<div class='patient_details'>
+								<h5>Total Waiting Time: $waiting_time Minutes</h5>
+								<h5>Average Waiting Time: " .$waiting_time/$no_of_patients. " Minutes</h5>
+							</div>
+							";
+
+
+
+	$current_time = strtotime("00:00:00");
+	/**print_r($patient_burst_time);
+	echo "<br>";	**/
+
+	$waiting_time = 0;
+	$str_wait_time = "";
+
+
 
 	while($id=array_pop($final_array)) {
 		/**echo $id;
@@ -241,8 +308,8 @@ if (isset($_POST['finish_button'])){
 		if($current_time < $intime)
 			$current_time = $intime;
 
+		$waiting_time += (($current_time-$intime)/60);
 		
-
 		$finish_time = strtotime("+" . $patient_burst_time[$id] . " minutes", $current_time);
 		/**echo $patient_burst_time[$id];
 		echo "<br>";**/
@@ -258,14 +325,22 @@ if (isset($_POST['finish_button'])){
 							<h5>Patient Id: P$id</h5>
 							<h5>Patient Name: $name</h5>
 							<h5>Patient Illness: $illness</h5>
+							<h5>Patient In Time: " . date('h:i:s' , $intime) . "</h5>
 							<h5>Patient Treating Time: $patient_burst_time[$id]</h5>
 						</div>
 					</div>
 					<hr>";
+
+
 		$current_time = $finish_time;
 
 
 	}
+	$str_wait_time .= "<div class='patient_details'>
+								<h5>Total Waiting Time: $waiting_time Minutes</h5>
+								<h5>Average Waiting Time: " .$waiting_time/$no_of_patients. " Minutes</h5>
+							</div>
+							";
 
 
 
