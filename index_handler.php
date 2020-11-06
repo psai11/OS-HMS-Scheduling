@@ -99,12 +99,7 @@ if (isset($_POST['finish_button'])){
 			
 		}
 	}
-	/**
-	print_r($patient_burst_time);
-	echo "<br>";
-	print_r($multiplier);
-	echo "<br>";
-	print_r($all_id);**/
+	
 	$no_of_patients = mysqli_num_rows($data_query);
 	$average_burst_time /= mysqli_num_rows($data_query);
 
@@ -114,15 +109,7 @@ if (isset($_POST['finish_button'])){
 	}
 	
 	asort($effective_time);
-	/**print_r($effective_time);
-	echo "<br>";
-	**/
-	/**
-	echo $average_burst_time;
-	echo "<br>";
-	$endTime = strtotime("+" . $effective_time[2] . " minutes", strtotime($intime));
-	echo date('h:i:s', $endTime);
-	**/
+	
 
 	$id_in_order=array();
 	$data_query = mysqli_query($con, "SELECT * FROM CURRENT_PATIENT ORDER BY PAT_INTIME");
@@ -133,11 +120,7 @@ if (isset($_POST['finish_button'])){
 	$final_array = array();
 	$wait_queue = array();
 
-	/**print_r($id_in_order);
-	echo "<br>";**/
-	
-	//print_r($effective_time);
-	//echo "<br>";
+
 
 	$current_time = strtotime("00:00:00");
 
@@ -164,12 +147,7 @@ if (isset($_POST['finish_button'])){
 			$dq = mysqli_query($con, "SELECT * FROM CURRENT_PATIENT WHERE PAT_ID='$i'");
 			$row = mysqli_fetch_array($dq);
 			$temp_t = strtotime($row['PAT_INTIME']);
-			/**echo date('h:i:s' , $temp_t);
-			echo "  ";
-			echo date('h:i:s' , $current_time);
-			echo "  ";
-			echo date('h:i:s' , $finish_time);
-			echo "  <br>";**/
+			
 			if(date('h:i:s' , $temp_t) < date('h:i:s' , $finish_time)) {
 				array_push($wait_queue, array_pop($id_in_order));
 				continue;	
@@ -194,9 +172,6 @@ if (isset($_POST['finish_button'])){
 	}
 
 	array_splice($wait_queue, 0,1);
-
-	//print_r($wait_queue);
-	//echo "<br>";
 
 
 	foreach ($effective_time as $key => $value) {
