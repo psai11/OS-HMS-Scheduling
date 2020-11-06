@@ -40,7 +40,9 @@ CREATE TABLE `current_patient` (
 
 INSERT INTO `current_patient` (`PAT_ID`, `PAT_NAME`, `PAT_ILLNESS`, `PAT_INTIME`) VALUES
 (1, 'sai', 'cough', '21:16:00'),
-(2, 'penta', 'cough', '11:18:00');
+(2, 'penta', 'cough', '11:18:00'),
+(3, 'Agniva', 'cough', '15:10:00'),
+(4, 'Basak', 'cough','17:20:00');
 
 --
 -- Indexes for dumped tables
